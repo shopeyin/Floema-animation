@@ -1,0 +1,29 @@
+@import './base/reset.scss';
+
+
+@import './utils/variables';
+@import './utils/functions';
+@import './utils/mixins';
+@import './utils/vendors';
+@import './utils/responsive';
+
+@import './layout/navigation.scss';
+@import './share/descriptions';
+@import './share/titles';
+@import './share/vertical-titles.scss';
+@import './base/fonts.scss';
+@import './base/base.scss';
+
+
+@import './components/preloader.scss';
+
+@import './pages/about/about.scss';
+@import './pages/about/content.scss';
+@import './pages/about/gallery.scss';
+@import './pages/about/highlight.scss';
+
+@import './pages/collections/collections.scss';
+
+@import './pages/details/details.scss';
+
+@import './pages/home/home.scss';
