@@ -50,6 +50,7 @@
     "nodemon": "^2.0.22",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.2.4",
+    "prefix": "^1.0.0",
     "prismic-dom": "^2.2.7",
     "pug": "^3.0.2",
     "raw-loader": "^4.0.2",
