@@ -21,7 +21,6 @@ class App {
   }
 
   onPreloaded () {
-
     this.preloader.destroy()
     this.onResize()
     this.page.show()

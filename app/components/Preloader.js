@@ -13,6 +13,7 @@ export default class Preloader extends Component {
         images: document.querySelectorAll('img')
       }
     })
+
     split({
       element: this.elements.title,
       expression: '<br>'
@@ -21,15 +22,17 @@ export default class Preloader extends Component {
       element: this.elements.title,
       expression: '<br>'
     })
-    this.elements.titleSpans = this.elements.title.querySelectorAll('span span')
+
+    this.elements.titleSpans =
+      this.elements.title.querySelectorAll('span span')
     this.length = 0
 
     this.createLoader()
   }
 
   createLoader () {
-    each(this.elements.images, element => {
-      element.onload = _ => this.onAsssetLoaded(element)
+    each(this.elements.images, (element) => {
+      element.onload = (_) => this.onAsssetLoaded(element)
       element.src = element.getAttribute('data-src')
     })
   }
@@ -46,34 +49,40 @@ export default class Preloader extends Component {
   }
 
   onLoaded () {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.animateOut = GSAP.timeline({
         delay: 2
       })
 
       this.animateOut.to(this.elements.titleSpans, {
-
         duration: 1.5,
         ease: 'expo.out',
         stagger: 0.1,
         y: '100%'
       })
 
-      this.animateOut.to(this.elements.numberText, {
+      this.animateOut.to(
+        this.elements.numberText,
+        {
+          duration: 1.5,
+          ease: 'expo.out',
+          stagger: 0.1,
+          y: '100%'
+        },
+        '-=1.4'
+      )
 
-        duration: 1.5,
-        ease: 'expo.out',
-        stagger: 0.1,
-        y: '100%'
-      }, '-=1.4')
-
-      this.animateOut.to(this.element, {
-        duration: 1.5,
-        ease: 'expo.out',
-        scaleY: 0,
-        transformOrigin: '100% 100%'
-      }, '-=1')
-      this.animateOut.call(_ => {
+      this.animateOut.to(
+        this.element,
+        {
+          duration: 1.5,
+          ease: 'expo.out',
+          scaleY: 0,
+          transformOrigin: '100% 100%'
+        },
+        '-=1'
+      )
+      this.animateOut.call((_) => {
         this.emit('completed')
       })
     })

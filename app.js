@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 require('dotenv').config()
 const fetch = require('node-fetch')
 const Prismic = require('@prismicio/client')
@@ -77,7 +78,7 @@ app.get('/', async (req, res) => {
   })
   const navigation = await api.getSingle('navigation')
 
-  console.log(navigation)
+  console.log(preloader.data.title)
   res.render('pages/home', { home, meta, preloader, collections, navigation })
 })
 
@@ -86,13 +87,13 @@ app.get('/about', async (req, res) => {
   const about = await api.getSingle('aboutpage')
   const meta = await api.getSingle('metadata')
   const preloader = await api.getSingle('preloader')
-
-  about.data.body.forEach((item) => {
-    // console.log(item)
-    if (item.slice_type === 'content') {
-      console.log(item)
-    }
-  })
+  // console.log(about)
+  // about.data.body.forEach((item) => {
+  //   console.log(item.primary.description.text)
+  //   // if (item.slice_type === 'content') {
+  //   //   console.log(item)
+  //   // }
+  // })
 
   res.render('pages/about', { about, meta, preloader })
 })

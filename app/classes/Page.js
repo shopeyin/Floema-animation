@@ -1,15 +1,26 @@
 import GSAP from 'gsap'
 import { each } from 'lodash'
+import map from 'lodash/map'
 import Prefix from 'prefix'
+import NormalizeWheel from 'normalize-wheel'
+import Title from 'animations/Title'
+import Paragraph from '../animations/Paragraph'
+import Label from 'animations/Label'
+import Highlight from '../animations/Highlight'
+
 export default class Page {
   constructor ({ id, element, elements }) {
     this.id = id
     this.selector = element
-    this.selectorChildren = { ...elements }
+    this.selectorChildren = {
+      ...elements,
+      animationTitles: '[data-animation="title"]',
+      animationHighlights: '[data-animation="highlight"]',
+      animationParagraphs: '[data-animation="paragraph"]',
+      animationLabels: '[data-animation="label"]'
+    }
 
     this.transformPrefix = Prefix('transform')
-
-    console.log(this.transformPrefix)
 
     this.onMouseWheelEvent = this.onMouseWheel.bind(this)
   }
@@ -41,8 +52,39 @@ export default class Page {
           this.elements[key] = document.querySelector(entry)
         }
       }
-      // console.log(this.elements[key], entry, 'PAGE HERE')
     })
+    this.createAnimations()
+  }
+
+  createAnimations () {
+    this.animations = []
+    // Title
+    this.animationTitles = map(this.elements.animationTitles, element => {
+      return new Title({
+        element
+      })
+    })
+    // Highlight
+    this.animationHighlights = map(this.elements.animationHighlights, element => {
+      return new Highlight({
+        element
+      })
+    })
+    this.animations.push(...this.animationHighlights)
+    // Paragraph
+    this.animationParagraphs = map(this.elements.animationParagraphs, element => {
+      return new Paragraph({
+        element
+      })
+    })
+    this.animations.push(...this.animationParagraphs)
+    // Label
+    this.animationLabels = map(this.elements.animationLabels, element => {
+      return new Label({
+        element
+      })
+    })
+    this.animations.push(...this.animationLabels)
   }
 
   show () {
@@ -79,15 +121,15 @@ export default class Page {
   }
 
   onMouseWheel (event) {
-    const { deltaY } = event
-
-    this.scroll.target += deltaY
+    const { pixelY } = NormalizeWheel(event)
+    this.scroll.target += pixelY
   }
 
   onResize () {
     if (this.elements.wrapper) {
       this.scroll.limit = this.elements.wrapper.clientHeight - window.innerHeight
     }
+    each(this.animations, animation => animation.onResize())
   }
 
   update () {

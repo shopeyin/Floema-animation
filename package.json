@@ -48,6 +48,7 @@
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.9",
     "nodemon": "^2.0.22",
+    "normalize-wheel": "^1.0.1",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.2.4",
     "prefix": "^1.0.0",
