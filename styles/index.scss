@@ -7,11 +7,14 @@
 @import './utils/vendors';
 @import './utils/responsive';
 
-@import './layout/navigation.scss';
-@import './share/descriptions';
 @import './share/titles';
 @import './share/vertical-titles.scss';
 @import './share/pages.scss';
+@import './share/links.scss';
+
+@import './layout/navigation.scss';
+@import './share/descriptions';
+
 @import './base/fonts.scss';
 @import './base/base.scss';
 
@@ -23,8 +26,8 @@
 @import './pages/about/gallery.scss';
 @import './pages/about/highlight.scss';
 
-@import './pages/collections/collections.scss';
+@import './pages/collections/collections';
 
-@import './pages/details/details.scss';
+@import './pages/details/details';
 
 @import './pages/home/home.scss';

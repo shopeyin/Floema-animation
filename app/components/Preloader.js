@@ -45,7 +45,6 @@ export default class Preloader extends Component {
     if (percent === 1) {
       this.onLoaded()
     }
-    console.log(percent * 100)
   }
 
   onLoaded () {

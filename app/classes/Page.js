@@ -7,7 +7,8 @@ import Title from 'animations/Title'
 import Paragraph from '../animations/Paragraph'
 import Label from 'animations/Label'
 import Highlight from '../animations/Highlight'
-
+import { ColorsManager } from 'classes/Colors'
+import AsyncLoad from './AsyncLoad'
 export default class Page {
   constructor ({ id, element, elements }) {
     this.id = id
@@ -17,7 +18,8 @@ export default class Page {
       animationTitles: '[data-animation="title"]',
       animationHighlights: '[data-animation="highlight"]',
       animationParagraphs: '[data-animation="paragraph"]',
-      animationLabels: '[data-animation="label"]'
+      animationLabels: '[data-animation="label"]',
+      preloaders: ' [data-src]'
     }
 
     this.transformPrefix = Prefix('transform')
@@ -54,6 +56,7 @@ export default class Page {
       }
     })
     this.createAnimations()
+    this.createPreloader()
   }
 
   createAnimations () {
@@ -87,8 +90,18 @@ export default class Page {
     this.animations.push(...this.animationLabels)
   }
 
+  createPreloader () {
+    this.preloaders = map(this.elements.preloaders, element => {
+      return new AsyncLoad({ element })
+    })
+  }
+
   show () {
     return new Promise((resolve) => {
+      ColorsManager.change({
+        backgroundColor: this.element.getAttribute('data-background'),
+        color: this.element.getAttribute('data-color')
+      })
       this.animationIn = GSAP.timeline()
       this.animationIn.fromTo(
         this.element,
@@ -111,7 +124,7 @@ export default class Page {
 
   hide () {
     return new Promise((resolve) => {
-      this.removeEventListeners()
+      this.destroy()
       this.animationOut = GSAP.timeline()
       this.animationOut.to(this.element, {
         autoAlpha: 0,
@@ -162,5 +175,9 @@ export default class Page {
 
   removeEventListeners () {
     window.removeEventListener('mousewheel', this.onMouseWheelEvent)
+  }
+
+  destroy () {
+    this.removeEventListeners()
   }
 }
